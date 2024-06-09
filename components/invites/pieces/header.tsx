@@ -78,6 +78,7 @@ export default function InviteHeader({
           alt="Invitation background image"
           width={isDesktop ? 1200 : 800}
           height={isDesktop ? 800 : 1200}
+          layout="responsive"
           style={{
             height: "100vh",
             width: "100%",
