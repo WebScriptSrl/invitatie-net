@@ -38,6 +38,7 @@ export default function GoogleMapsLocation() {
         referrerPolicy="no-referrer-when-downgrade"
         loading="lazy"
         allowFullScreen
+        // key disabled for security reasons
         src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAdAqKJ4OE4tRfYEpqD-a4J1Ru5nY1rhYA
     &q=Amiral+Events+Style,Cluj-Napoca,RO"
       ></iframe>

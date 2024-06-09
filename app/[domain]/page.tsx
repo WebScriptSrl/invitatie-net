@@ -25,6 +25,12 @@ export async function generateStaticParams() {
 
   const allPaths = allInvites.flatMap(({ primaryDomain }) => [primaryDomain]);
 
+  if (allPaths.length === 0) {
+    return {
+      notFound: true,
+    };
+  }
+
   return allPaths;
 }
 
