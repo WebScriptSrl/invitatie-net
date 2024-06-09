@@ -23,12 +23,14 @@ export async function generateStaticParams() {
     },
   });
 
+  if (!allInvites) {
+    return notFound();
+  }
+
   const allPaths = allInvites.flatMap(({ primaryDomain }) => [primaryDomain]);
 
-  if (allPaths.length === 0) {
-    return {
-      notFound: true,
-    };
+  if (!allPaths) {
+    return notFound();
   }
 
   return allPaths;
