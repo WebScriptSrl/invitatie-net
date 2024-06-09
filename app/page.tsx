@@ -1,13 +1,13 @@
 import Image from "next/image";
-import styles from "./page.module.css";
+import styles from "@/styles/modules/homepage.module.css";
 
 export default function Home() {
   return (
     <main className={styles.main}>
       <div className={styles.description}>
         <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
+          Full website coming soon&nbsp;
+          <code className={styles.code}>Invitatie Net</code>
         </p>
         <div>
           <a
@@ -15,7 +15,7 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            By{" "}
+            Built with{" "}
             <Image
               src="/vercel.svg"
               alt="Vercel Logo"
@@ -28,6 +28,9 @@ export default function Home() {
         </div>
       </div>
 
+      <h1 className={styles.title}>Welcome to Invitatie Net!</h1>
+      <h2>Full website is coming soon!&nbsp;</h2>
+
       <div className={styles.center}>
         <Image
           className={styles.logo}
@@ -39,7 +42,7 @@ export default function Home() {
         />
       </div>
 
-      <div className={styles.grid}>
+      {/* <div className={styles.grid}>
         <a
           href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
           className={styles.card}
@@ -89,7 +92,7 @@ export default function Home() {
             Instantly deploy your Next.js site to a shareable URL with Vercel.
           </p>
         </a>
-      </div>
+      </div> */}
     </main>
   );
 }

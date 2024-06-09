@@ -1,0 +1,10 @@
+.locationContainer {
+  box-shadow: 0 0 10px 10px rgba(138, 105, 8, 0.5);
+  margin-top: -1rem;
+}
+
+@media screen and (min-width: 768px) {
+  .locationContainer {
+    margin-top: -4rem;
+  }
+}

@@ -1,0 +1,47 @@
+.personsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  box-shadow: inset 0 0 20px 20px rgba(180, 113, 13, 0.3);
+  padding: 2rem 0;
+}
+
+.parentsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+  .parentsContainer {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
+
+.personsContainer > h2:first-of-type {
+  margin-top: 1rem;
+}
+
+.lineBreak {
+  width: 30%;
+  height: 1px;
+  background-color: rgba(180, 113, 13, 0.6);
+}
+
+.deceasedContainer {
+  font-size: 1.5rem;
+  border: 2px solid rgba(12, 8, 1, 0.6);
+  padding: 0 2rem;
+  border-radius: 10%;
+  background-color: rgba(180, 113, 13, 0.1);
+}

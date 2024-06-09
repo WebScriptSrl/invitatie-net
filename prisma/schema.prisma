@@ -1,0 +1,787 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String   @id @default(cuid())
+  firstName       String?
+  lastName        String?
+  username        String?   @unique
+  phone           String?   @unique
+  whatsapp        String?   @unique
+  facebook        String?   @unique
+  twitter         String?   @unique
+  instagram       String?   @unique
+  email           String?   @unique
+  emailVerified   DateTime?
+
+  image           String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  role            Role     @default(VISITOR)
+
+  isPartner       Boolean  @default(false)
+  isPremium       Boolean  @default(false)
+ 
+  partner         User?    @relation("Partner", fields: [partnerId], references: [id], onDelete: SetNull)
+  partnerId       String?  @unique
+
+  user            User?   @relation("Partner")
+
+  cookieConsent   Boolean  @default(false)
+  cookieConsentAt DateTime?
+  cookiesAccepted Json[]
+  cookiesRejected Json[]
+  cookiesSettings Json[]
+  cookiesPreferences Json[]
+
+  active          Boolean  @default(true)
+  ip              String[]
+  userAgent       String[]
+  lastLogin       DateTime?
+  lastIp          String?
+  lastUserAgent   String?
+  devices         String[]
+  lastDevice      String?
+  lastActivity    DateTime?
+  visited         String[]
+  visitedAt       DateTime[] 
+  visitedFrom     String[]
+  locations       String[]
+  lastLocation    String?
+
+  shortUrlsNum    Int?     @default(0)
+  premiumUrlsNum  Int?     @default(0)
+  guestUrlsNum    Int?     @default(0)
+  premiumGuestUrlsNum Int?  @default(0)
+
+  accounts        Account[]
+  sessions        Session[]
+  invites         Invite[]
+  posts           Post[]
+  invitees        Invitee[]
+  uniqueInvites   UniqueInvite[]
+
+  responses       InviteResponse[]
+
+  urls            Url[]
+
+  shortUrls       ShortUrl[]
+  guestUrls       GuestUrls[]
+  premiumGuestUrls PremiumGuestUrls[]
+
+  eventRoom       EventRoom[]
+
+  specialGuests   SpecialGuest[]
+
+  pages           Page[]
+  components      Component[]
+
+  @@map("users")
+}   
+
+model Account {
+  id                    String   @id @default(cuid())
+  userId                String
+  type                  String
+  provider              String
+  providerAccountId     String
+  refresh_token         String?
+  refresh_token_expires Int?
+  access_token          String?
+  expires_at            Int?
+  token_type            String?
+  scope                 String?
+  id_token              String?
+  session_state         String?
+  oauth_token_secret    String?
+  oauth_token           String?
+
+  premiumAccount        Boolean  @default(false)
+
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+  @@map("accounts")
+}
+
+model Session {
+  id            String   @id @default(cuid())
+  sessionToken  String   @unique
+  userId        String
+  expires       DateTime
+
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+model VerificationToken {
+  indentifier   String
+  token         String  @unique
+  expires       DateTime
+
+  @@unique([indentifier, token])
+  @@map("verification_tokens")
+}
+
+model Invite {
+  id              String    @id @default(cuid())
+  handle          String    @unique
+
+  category        String
+
+  title           String    @unique
+  name            String?
+  model           String
+  code            String?   @default(cuid())
+  isPublic        Boolean   @default(false)
+  isActive        Boolean   @default(false)
+  isExample       Boolean   @default(false)
+
+  description     String?   @db.Text
+  logo            String?   @default("Invitatie Net")
+
+  content         Json[]    @default([])
+  eventDate       DateTime?
+  eventLocation   Location[]
+
+  eventTime       String?
+  eventTimeZone   String?
+
+  font            String?   @default("__variable_283def")
+  fontColor       String?
+  secondaryFont   String?   @default("__variable_b7e023")
+  background      String?   
+  color           String?  
+  mainImage       String?
+  images          String[]  @default([])
+  customDomain    DomainType?  @default(TITLE_QUERY)
+  primaryDomain   String?   @unique
+  clicks          Int?      @default(0)
+
+  message404      String?   @default("Ups! Invitatia nu a fost gasita!") @db.Text
+  message401      String?   @default("Ups! Accesul la aceasta pagina este restricționat!") @db.Text
+
+  isDraft         Boolean   @default(true)
+  publishedAt     DateTime? @default(now())
+  validUntil      DateTime?
+  validityPeriod  Int?      @default(180)
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  sent            Boolean   @default(false)
+  sentAt          DateTime?
+  sentTo          Invitee[]
+  used            Boolean   @default(false)
+  usedAt          DateTime?
+  locationsUsed   LocationsUsed[]
+
+  urls            Url[]     @relation("Urls")  
+
+  components      Component[]
+
+  user            User?     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId          String?
+
+  uniqueInvites   UniqueInvite[]
+
+  responses       InviteResponse[]
+
+  @@index([userId])
+  @@map("invites")
+}
+
+model UniqueInvite {
+  id              String   @id @default(cuid())
+
+  code            String   @default(cuid())
+
+  inviteeName     String?
+  favoriteColor   String?
+  favoriteFont    String?  @default("--font-kalam")
+  favoriteLogo    String?
+  favoriteImage   String?
+  favoriteMessage String?
+  images          String[]  @default([])
+  limit           Int?      @default(1)
+
+  sent            Boolean   @default(false)
+  sentAt          DateTime?
+  used            Boolean   @default(false)
+  usedAt          DateTime?
+
+  validityPeriod  Int?      @default(180)
+  validUntil      DateTime?
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  invite          Invite   @relation(fields: [inviteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  inviteId        String
+
+  invitees        Invitee[]
+  domain          String?
+  domainType      DomainType? @default(TITLE_GUEST_QUERY)
+
+  user            User?     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId          String?
+
+
+  @@unique([code])
+  @@index([inviteId])
+  @@index([userId])
+  @@map("unique_invites")
+}
+
+model Location {
+  id              String   @id @default(cuid())
+  name            String?
+  description     String?  @db.Text
+
+  handle          String   @unique
+
+  date            DateTime?
+  
+  longitude       Float?
+  latitude        Float?
+  address         String?
+  city            String?
+  region          String?
+  country         String?
+  postalCode      String?
+  phone           String?
+  email           String?
+  website         String?
+  images          String[] @default([])
+  isDraft         Boolean  @default(true)
+  isPublic        Boolean  @default(true)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  invites         Invite[]
+  eventRooms      EventRoom[]
+
+  locationsUsed   LocationsUsed[]
+
+  inviteRequests  DevRequest[]
+
+  @@map("locations")
+
+}
+
+model LocationsUsed {
+  id              String    @id @default(cuid())
+
+  location        Location  @relation(fields: [locationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  locationId      String
+
+  eventType       String?   @default("created")
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  invite          Invite    @relation(fields: [inviteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  inviteId        String
+
+
+  @@index([locationId])
+  @@index([inviteId])
+  @@map("locations_used")
+}
+
+model Url {
+  id              String   @id @default(cuid())
+
+  premium         Boolean  @default(false)
+  premiumDomain   String?  @unique  
+  baseUrl         String   @unique
+  alias           String   @unique
+  guestAlias      String?  @unique
+  active          Boolean  @default(true)
+  validityPeriod  Int?     @default(180)
+
+  shortUrls       ShortUrl[]
+  guestUrls       GuestUrls[]
+  premiumGuestUrls PremiumGuestUrls[]
+
+  clicks          Int?     @default(0)
+  lastClick       DateTime?
+  urlType         DomainType? @default(TITLE_QUERY)
+
+  locations       String[] @default([])
+  ips             String[] @default([])
+
+  expiration      DateTime?
+     
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user            User?    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId          String?
+
+  invites         Invite[] @relation("Urls")  
+
+  @@index([userId])
+  @@map("urls")
+}
+
+model PremiumGuestUrls {
+  id              String   @id @default(cuid())
+
+  url             String   @unique
+
+  baseUrl         Url      @relation(fields: [urlId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  urlId           String
+
+  alias           String   @unique
+  active          Boolean  @default(true)
+  validityPeriod  Int?     @default(180)
+  expiration      DateTime?
+
+  clicks          Int?     @default(0)
+  lastClick       DateTime?
+  locations       String[] @default([])
+  ips             String[] @default([])
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user            User?    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId          String?
+
+  @@index([urlId])
+  @@map("premium_guest_urls")
+}
+
+model GuestUrls {
+  id              String   @id @default(cuid())
+
+  url             String   @unique
+
+  baseUrl         Url      @relation(fields: [urlId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  urlId           String
+
+  alias           String   @unique
+  active          Boolean  @default(true)
+  validityPeriod  Int?     @default(180)
+  expiration      DateTime?
+
+  clicks          Int?     @default(0)
+  lastClick       DateTime?
+  locations       String[] @default([])
+  ips             String[] @default([])
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user            User?    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId          String?
+
+  @@index([urlId])
+  @@map("guest_urls")
+}
+
+model ShortUrl {
+  id              String   @id @default(cuid())
+
+  url             String   @unique
+
+  baseUrl         Url      @relation(fields: [urlId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  urlId           String
+
+  alias           String   @unique
+  active          Boolean  @default(true)
+  validityPeriod  Int?     @default(180)
+  expiration      DateTime?
+
+  clicks          Int?     @default(0)
+  lastClick       DateTime?
+  locations       String[] @default([])
+  ips             String[] @default([])
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user            User?    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId          String?
+
+  @@index([urlId])
+  @@map("short_urls")
+
+}
+
+model SpecialGuest {
+  id              String   @id @default(cuid())
+  
+  firstName       String
+  lastName        String
+  nickname        String?
+
+  band            String?
+
+  email           String?
+  phone           String?
+  whatsapp        String?
+  facebook        String?
+  twitter         String?
+  instagram       String?
+  website         String?
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user            User?     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId          String?
+
+  eventRoom       EventRoom? @relation(fields: [eventRoomId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  eventRoomId     String?
+
+  table           Table?    @relation(fields: [tableId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  tableId         String?
+
+  @@index([userId])
+  @@index([eventRoomId])
+  @@index([tableId])
+  @@map("special_guests")
+}
+
+model EventRoom {
+  id              String   @id @default(cuid())
+
+  name            String?
+  handle          String
+  
+  description     String?  @db.Text
+  images          String[] @default([])
+  isDraft         Boolean  @default(true)
+
+  tablesNum       Int?     @default(1)
+  chairs          Int?     @default(1)
+  capacity        Int?     @default(1)
+  isPublic        Boolean  @default(true)
+
+  menu            Json[]   @default([])
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user            User?     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId          String?
+
+  tables          Table[]
+
+  specialGuests   SpecialGuest[]
+
+  location        Location[]
+
+  @@unique([handle])
+  @@index([userId])
+  @@map("event_rooms")
+}
+
+model Table {
+  id              String   @id @default(cuid())
+  handle          String
+  
+  number          Int?
+  
+  name            String?
+  description     String?  @db.Text
+  images          String[] @default([])
+
+  isDraft         Boolean  @default(true)
+  capacity        Int?     @default(1)
+  isPublic        Boolean  @default(true)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  eventRoom       EventRoom? @relation(fields: [eventRoomId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  eventRoomId     String?
+
+  guests          Invitee[]
+
+  specialGuests   SpecialGuest[]
+
+  @@unique([handle])
+  @@index([eventRoomId])
+  @@map("tables")
+}
+
+
+
+model Invitee {
+  id              String   @id @default(cuid())
+  firstName       String
+  lastName        String
+  nickname        String?
+
+  email           String?
+  phone           String?
+  whatsapp        String?
+  facebook        String?
+  twitter         String?
+  instagram       String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  expectedNumber  Int?     @default(1)
+  side            String?
+
+  uniqueInvites   UniqueInvite[]
+
+  invites         Invite[]
+
+  user            User?     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId          String?
+
+  responses       InviteResponse[]
+
+  table           Table?    @relation(fields: [tableId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  tableId         String?
+
+  @@unique([email, instagram, twitter, facebook, phone, whatsapp])
+  @@index([userId, tableId])
+  @@map("invitees")
+}
+
+model Post {
+  id              String   @id @default(cuid())
+  title           String?
+  handle          String
+  description     String?  @db.Text
+  content         Json[]   @default([])
+  slug            String?  
+  mainImage       String?
+  images          String[] @default([])
+  isDraft         Boolean  @default(true)
+  published       Boolean  @default(false)
+  publishedAt     DateTime? @default(now())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user            User?     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  userId          String?
+
+  metadata        Metadata[]
+
+  @@unique([slug, title, handle])
+  @@index([userId])
+  @@map("posts")
+}
+
+model Page {
+  id              String   @id @default(cuid())
+  title           String?
+  description     String?  @db.Text
+  content         Json[]   @default([])
+  handle          String
+  slug            String?  
+  mainImage       String?
+  images          String[] @default([])
+  isDraft         Boolean  @default(true)
+  published       Boolean  @default(false)
+  publishedAt     DateTime? @default(now())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user            User?     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  userId          String?
+
+  metadata        Metadata[]
+
+  components      Component[]
+
+  cookies         Cookies[]
+
+  @@unique([slug, title, handle])
+  @@index([userId])
+  @@map("pages")
+}
+
+model Component {
+  id              String   @id @default(cuid())
+  title           String
+  description     String?  @db.Text
+  type            String?
+  
+  handle          String
+
+  content         Json[]   @default([])
+  images          String[] @default([])
+  isDraft         Boolean  @default(true)
+
+  fontFamily      String?  @default("__variable_283def")
+  fontSize        String?  @default("1rem")
+  fontColor       String?  @default("#000")
+  backgroundColor String?  @default("#fff")
+  borderColor     String?  @default("#000")
+  borderRadius    String?  @default("0")
+  padding         String?  @default("0")
+  margin          String?  @default("0")
+  width           String?  @default("100%")
+  height          String?  @default("auto")
+  display         String?  @default("block")
+  position        String?  @default("relative")
+  top             String?  @default("0")
+  right           String?  @default("0")
+  bottom          String?  @default("0")
+  left            String?  @default("0")
+  zIndex          Int?     @default(0)
+  opacity         Float?   @default(1)
+  visibility      String?  @default("visible")
+  overflow        String?  @default("hidden")
+    
+  published       Boolean  @default(false)
+  publishedAt     DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user            User?     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  page            Page?     @relation(fields: [pageId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  userId          String?
+  pageId          String?
+
+  invite         Invite?   @relation(fields: [inviteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  inviteId       String?
+
+  @@unique([title, handle])
+  @@index([userId])
+  @@map("components")
+}
+
+model Metadata {
+  id              String   @id @default(cuid())
+  key             String   @unique
+  value           String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  post            Post?      @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  page            Page?      @relation(fields: [pageId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  postId          String?
+  pageId          String?
+}
+
+model InviteResponse {
+  id              String   @id @default(cuid())
+
+  inviteId        String
+  inviteeId       String?
+
+  response        Json[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  invitee         Invitee?  @relation(fields: [inviteeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  invite          Invite?   @relation(fields: [inviteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  user            User?     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId          String?
+
+  @@index([inviteId])
+  @@index([inviteeId])
+  @@index([userId])
+  @@map("invite_responses")
+}
+
+model Cookies {
+  id              String   @id @default(cuid())
+  key             String   @unique
+  value           String
+  description     String?  @db.Text
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  page            Page?      @relation(fields: [pageId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  pageId          String?
+
+  @@map("cookies")
+}
+
+model DevRequest {
+
+  id              String   @id @default(cuid())
+  name            String
+
+  title           String?
+  description     String?  @db.Text
+  message         String?  @db.Text
+  requests       Json[]   @default([])
+
+  eventType       String?
+
+  urlType         String?
+  favoriteDomain  String?
+  eventDate       DateTime?
+  eventTimeZone   String?
+
+  eventLocation   Location[]
+
+  favoriteColor   String?
+  favoriteFont    String?  @default("--font-kalam")
+
+  email           String?
+  phone           String?
+  whatsapp        String?
+  facebook        String?
+  twitter         String?
+  instagram       String?
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  ips             String[]
+  userAgents      String[]
+  locations       String[]
+  devices         String[]
+
+  @@map("invite_requests")
+}
+
+model BaseSettings {
+  id              String   @id @default(cuid())
+  key             String   @unique
+  value           String
+  description     String?  @db.Text
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("base_settings")
+}
+
+enum Role {
+  VISITOR
+  USER
+  ADMIN
+  PARTNER
+}
+
+enum DomainType {
+  SHORT_URL
+  TITLE_QUERY
+  GUEST
+  PREMIUM
+  PREMIUM_GUEST
+  TITLE_GUEST_QUERY
+}
