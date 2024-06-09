@@ -12,6 +12,8 @@ import ConfirmationForm from "@/components/common/confirmationForm";
 
 export const dynamic = "force-dynamic";
 
+const imagesApi = process.env.NEXT_PUBLIC_REACT_APP_IMAGE_BASE_URL;
+
 const api =
   process.env.NODE_ENV === "development"
     ? process.env.NEXT_PUBLIC_API_URL_DEV
@@ -89,32 +91,32 @@ export default async function Poetry({
 
   const dateTimeImageBackground = "dominicana-mobile-4.jpg";
 
-  const mobileImage = await fetch(
-    `${api}/get-image?file=${mobileImageBackground}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  // const mobileImage = await fetch(
+  //   `${api}/get-image?file=${mobileImageBackground}`,
+  //   {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   }
+  // );
 
-  const image = await fetch(`${api}/get-image?file=${defaultBackgroundImage}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  // const image = await fetch(`${api}/get-image?file=${defaultBackgroundImage}`, {
+  //   method: "GET",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  // });
 
-  const dateTimeImage = await fetch(
-    `${api}/get-image?file=${dateTimeImageBackground}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  // const dateTimeImage = await fetch(
+  //   `${api}/get-image?file=${dateTimeImageBackground}`,
+  //   {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   }
+  // );
 
   const primaryFont = "__variable_283def";
   const secondaryFont = "__variable_b7e023";
@@ -131,8 +133,8 @@ export default async function Poetry({
         options={{
           preferredLogoFont: primaryFont,
           secondaryFont: secondaryFont,
-          image: image.url,
-          mobileImage: mobileImage.url,
+          image: `${imagesApi}?file=${defaultBackgroundImage}`,
+          mobileImage: `${imagesApi}?file=${mobileImageBackground}`,
           showMenu: false,
           guest: params.guestName,
           guestText: params.guestText,
@@ -159,8 +161,8 @@ export default async function Poetry({
           // fontSize: "2rem",
           // color: "white",
           showSeconds: false,
-          image: dateTimeImage.url,
-          desktopImage: image.url,
+          image: `${imagesApi}?file=${dateTimeImageBackground}`,
+          desktopImage: `${imagesApi}?file=${defaultBackgroundImage}`,
         }}
       />
 

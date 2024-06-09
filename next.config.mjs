@@ -4,7 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**.invitatie.net",
+        hostname: "invitatie.net",
         port: "",
         pathname: "/api/images/**",
       },
