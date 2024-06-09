@@ -276,7 +276,10 @@ export default function ConfirmationForm({
                 {Object.keys(formFields).map((field, index) => (
                   <div key={index} className={styles.formField}>
                     <label
-                      htmlFor={field}
+                      htmlFor={`person${i + 1}${field}`
+                        .toLowerCase()
+                        .split(" ")
+                        .join("")}
                       style={{
                         fontSize: "1rem",
                         fontWeight: "bold",
@@ -388,7 +391,7 @@ export default function ConfirmationForm({
                   gap: "10px",
                 }}
               >
-                <label htmlFor="reasonName">Nume</label>
+                <label htmlFor="notComingName">Nume</label>
                 <input
                   type="text"
                   name="notComingName"
@@ -406,7 +409,7 @@ export default function ConfirmationForm({
                     maxWidth: "400px",
                   }}
                 />
-                <label htmlFor="reason">Mesajul tau...</label>
+                <label htmlFor="notComingMessage">Mesajul tau...</label>
                 <textarea
                   name="notComingMessage"
                   id="notComingMessage"
