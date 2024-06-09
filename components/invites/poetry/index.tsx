@@ -21,10 +21,12 @@ const googleMapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
 export default async function Poetry({
   params,
+  searchParams,
 }: {
   params: {
     [key: string]: any;
   };
+  searchParams?: URLSearchParams;
 }) {
   const eventsHeading =
     "Evenimentele din ziua noastră, la care va așteptăm să fiți alături de noi !";
