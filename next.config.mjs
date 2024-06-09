@@ -5,6 +5,10 @@ const nextConfig = {
       {
         hostname: "localhost",
       },
+      {
+        hostname: "*.invitatie.net",
+        path: "/get-image/",
+      },
     ],
   },
 };
