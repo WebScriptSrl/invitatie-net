@@ -10,29 +10,6 @@ import { Suspense } from "react";
 
 export const dynamic = "force-dynamic";
 
-export async function generateStaticParams() {
-  const allInvites = await prisma.invite.findMany({
-    select: {
-      primaryDomain: true,
-    },
-    where: {
-      isExample: true,
-    },
-  });
-
-  if (!allInvites) {
-    return notFound();
-  }
-
-  const allPaths = allInvites.flatMap(({ primaryDomain }) => [primaryDomain]);
-
-  if (!allPaths) {
-    return notFound();
-  }
-
-  return allPaths;
-}
-
 export default async function InvitePage({
   params,
   searchParams,
