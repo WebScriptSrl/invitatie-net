@@ -1,14 +1,16 @@
 import styles from "@/styles/modules/components/invites/common.module.css";
 
+import clsx from "clsx";
+
 import PersonsComponent from "@/components/common/persons";
 import InviteFooter from "../pieces/footer";
 import InviteHeader from "../pieces/header";
 import DateTimeComponent from "@/components/common/dateTime";
 import { loadFont, toDateString } from "@/lib/utils";
 import DayEvents from "@/components/common/dayEvents";
-import clsx from "clsx";
 import ConfirmationForm from "@/components/common/confirmationForm";
-import { Suspense } from "react";
+
+export const dynamic = "force-dynamic";
 
 const api =
   process.env.NODE_ENV === "development"
@@ -19,12 +21,10 @@ const googleMapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
 export default async function Poetry({
   params,
-  searchParams,
 }: {
   params: {
     [key: string]: any;
   };
-  searchParams?: URLSearchParams;
 }) {
   const eventsHeading =
     "Evenimentele din ziua noastră, la care va așteptăm să fiți alături de noi !";

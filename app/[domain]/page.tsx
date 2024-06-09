@@ -1,12 +1,11 @@
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 
-import prisma from "@/lib/prisma";
 import { UrlType } from "@/lib/types";
 import { checkUrlType } from "@/lib/helpers";
 import { fetchInviteData } from "@/lib/fetchers";
 import Poetry from "@/components/invites/poetry";
 import { Invite } from "@prisma/client";
-import { Suspense } from "react";
 
 export const dynamic = "force-dynamic";
 
