@@ -3,7 +3,9 @@ import prisma from "@/lib/prisma";
 export default async function Overview() {
   const data = await prisma.inviteResponse.findMany({
     where: {
-      userId: "clwzfi7ou1002v1y3zqotli21",
+      // Testing purposes
+      // userId: "clwzfi7ou1002v1y3zqotli21",
+      userId: process.env.NEXT_PUBLIC_USER_ID,
     },
     select: {
       response: true,
