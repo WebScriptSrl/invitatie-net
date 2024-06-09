@@ -22,7 +22,8 @@ export default function TimeRemaining({
 
   const now = Date.now();
 
-  const timeRemaining = dateInMs - now + options?.timezoneOffset; // Essential for Psql date format
+  const timeRemaining = dateInMs - now;
+  // + options?.timezoneOffset; // Essential for pg admin date format
   const remainigDays = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
   const remainigHours = Math.floor(
     (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
