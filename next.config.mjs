@@ -6,6 +6,7 @@ const nextConfig = {
         protocol: "https",
         hostname: "**.invitatie.net",
         port: "",
+        path: "/api/images/**",
       },
     ],
   },

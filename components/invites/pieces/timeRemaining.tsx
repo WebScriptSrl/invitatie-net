@@ -20,7 +20,7 @@ export default function TimeRemaining({
   const [minutes, setMinutes] = useState<number>(0);
   const [seconds, setSeconds] = useState<number>(0);
 
-  const nowWithOffset = Date.now() - options?.timezoneOffset;
+  const nowWithOffset = Date.now() + options?.timezoneOffset;
 
   const timeRemaining = dateInMs - nowWithOffset;
   const remainigDays = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
