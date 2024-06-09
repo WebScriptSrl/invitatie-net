@@ -42,7 +42,7 @@ export default async function Poetry({
 
   const timezoneOffset = date.getTimezoneOffset() * 1000 * 60;
 
-  date.setTime(date.getTime() + timezoneOffset - 1000 * 60 * 60);
+  date.setTime(date.getTime());
 
   const dateString = toDateString(date);
 
