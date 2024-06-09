@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 
-// Change this
+// Change this - Work in progress
 
 export default async function rateLimiter(req: NextRequest) {
   const rateLimitMap = new Map();

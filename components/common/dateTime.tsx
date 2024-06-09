@@ -85,7 +85,6 @@ export default function DateTimeComponent({
           alt="Wedding Image"
           width={isDesktop ? 1200 : 300}
           height={isDesktop ? 800 : 1200}
-          layout="responsive"
           style={{
             height: "100vh",
             width: "100%",

@@ -20,15 +20,17 @@ export default function TimeRemaining({
   const [minutes, setMinutes] = useState<number>(0);
   const [seconds, setSeconds] = useState<number>(0);
 
-  const nowWithOffset = Date.now() + options?.timezoneOffset;
-
   const now = Date.now();
+
+  // get timzone offset
+  const timeOffset = new Date().getTimezoneOffset();
 
   const timeRemaining = dateInMs - now;
   const remainigDays = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
   const remainigHours = Math.floor(
-    (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60) + timeOffset / 60
   );
+
   const remainigMinutes = Math.floor(
     (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
   );

@@ -79,6 +79,7 @@ export default function DayEvents({
                 eventTypeSVG(event.event).type === "cununie religioasa"
                   ? "black"
                   : undefined,
+              filter: "drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.7))",
             }}
           />
         </div>

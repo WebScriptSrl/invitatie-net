@@ -91,33 +91,6 @@ export default async function Poetry({
 
   const dateTimeImageBackground = "dominicana-mobile-4.jpg";
 
-  // const mobileImage = await fetch(
-  //   `${api}/get-image?file=${mobileImageBackground}`,
-  //   {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   }
-  // );
-
-  // const image = await fetch(`${api}/get-image?file=${defaultBackgroundImage}`, {
-  //   method: "GET",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  // });
-
-  // const dateTimeImage = await fetch(
-  //   `${api}/get-image?file=${dateTimeImageBackground}`,
-  //   {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   }
-  // );
-
   const primaryFont = "__variable_283def";
   const secondaryFont = "__variable_b7e023";
 
