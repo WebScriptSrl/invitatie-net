@@ -1,11 +1,6 @@
-"use server";
-
-import Image from "next/image";
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 
 import prisma from "@/lib/prisma";
-import Location from "@/components/location/googleMaps";
 import { UrlType } from "@/lib/types";
 import { checkUrlType } from "@/lib/helpers";
 import { fetchInviteData } from "@/lib/fetchers";
@@ -58,7 +53,6 @@ export default async function InvitePage({
 
   let inviteUrl: string = "";
   let dbUrl: string = "";
-  let user: string = "";
 
   let inviteData: Invite | null = null;
 
@@ -101,16 +95,6 @@ export default async function InvitePage({
       model = data.inviteData.model;
 
       inviteData = data.inviteData;
-
-      components = await prisma.component.findMany({
-        where: {
-          inviteId: data.inviteData.id,
-        },
-        select: {
-          handle: true,
-          title: true,
-        },
-      });
 
       break;
 
