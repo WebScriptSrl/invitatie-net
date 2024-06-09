@@ -2,7 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import { revalidatePath } from "next/cache";
 
-const path = process.env.DATA_DIR_INVITATIE_NET_DEV;
+const path =
+  process.env.NODE_ENV === "development"
+    ? process.env.DATA_DIR_INVITATIE_NET_DEV
+    : process.env.DATA_DIR_INVITATIE_NET;
 
 export const POST = async (req: NextRequest): Promise<Response> => {
   const ip = req.headers.get("x-real-ip") || req.headers.get("x-forwarded-for");
