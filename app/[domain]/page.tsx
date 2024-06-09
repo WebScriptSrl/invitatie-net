@@ -8,13 +8,15 @@ import Poetry from "@/components/invites/poetry";
 import { Invite } from "@prisma/client";
 import { Suspense } from "react";
 
+export const dynamic = "force-dynamic";
+
 export async function generateStaticParams() {
   const allInvites = await prisma.invite.findMany({
     select: {
       primaryDomain: true,
     },
     where: {
-      isActive: true,
+      isExample: true,
     },
   });
 
