@@ -1,6 +1,5 @@
 import Image from "next/image";
 import styles from "@/styles/modules/homepage.module.css";
-import OpenGraphImage from "@/components/images/opengraph-image";
 
 export default function Home() {
   return (
