@@ -11,7 +11,7 @@ import { Metadata, ResolvingMetadata } from "next";
 export const dynamic = "force-dynamic";
 
 type Props = {
-  params: { id: string };
+  params: { domain: string };
   searchParams?: { [key: string]: string | string[] | undefined };
 };
 
@@ -22,9 +22,11 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const imagesApi = process.env.NEXT_PUBLIC_REACT_APP_IMAGE_BASE_URL;
 
-  const id = params.id;
+  const id = params.domain;
 
-  const invitePath = decodeURIComponent(params.id);
+  const invitePath = decodeURIComponent(params.domain);
+
+  console.log(invitePath, "Invite path");
 
   const inviteDomain =
     process.env.NODE_ENV === "production"
