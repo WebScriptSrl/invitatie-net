@@ -10,10 +10,10 @@ const userTestId = process.env.NEXT_PUBLIC_USER_ID;
 export default async function Overview() {
   const response = await fetchInviteResponsesData(userTestId!);
 
+  response.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+
   const title = response.map((res) => res.invite?.title)[0];
   const capitalizeTitle = title?.split(" ").map(capitalize).join(" ");
-
-  const responseArray = response.map((res) => res.response);
 
   return (
     <div
