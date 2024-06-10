@@ -77,22 +77,36 @@ export default function ConfirmationForm({
             .map((i: any) => i)
             .join(""),
 
-          persons: Array.from({ length: parseInt(selectNum!) }).map((_, i) => {
-            return {
-              guest: answer(`person${i + 1}name`)
-                .map((i: any) => i)
-                .join(""),
-              phone: answer(`person${i + 1}phone`)
-                .map((i: any) => i)
-                .join(""),
-              menu: answer(`person${i + 1}menu`)
-                .map((i: any) => i)
-                .join(""),
-              message: answer(`person${i + 1}message`)
-                .map((i: any) => i)
-                .join(""),
-            };
-          }),
+          persons:
+            Number(selectNum) > 0
+              ? Array.from({ length: parseInt(selectNum!) }).map((_, i) => {
+                  return {
+                    guest: answer(`person${i + 1}name`)
+                      .map((i: any) => i)
+                      .join(""),
+                    phone: answer(`person${i + 1}phone`)
+                      .map((i: any) => i)
+                      .join(""),
+                    menu: answer(`person${i + 1}menu`)
+                      .map((i: any) => i)
+                      .join(""),
+                    message: answer(`person${i + 1}message`)
+                      .map((i: any) => i)
+                      .join(""),
+                  };
+                })
+              : [
+                  {
+                    guest: answer("person1name")
+                      .map((i: any) => i)
+                      .join(""),
+                    phone: undefined,
+                    menu: "Nu pot ajunge!",
+                    message: answer("person1message")
+                      .map((i: any) => i)
+                      .join(""),
+                  },
+                ],
         },
         numberOfPersons: selectNum,
         inviteCode,
@@ -100,6 +114,7 @@ export default function ConfirmationForm({
         invitedName,
       };
 
+      console.log(data);
       const stringData = JSON.stringify(data);
 
       const response = await fetch(`${options?.baseApi}/confirmation`, {
@@ -330,7 +345,7 @@ export default function ConfirmationForm({
                           className={styles.inputField}
                           placeholder={
                             formFields[field].label.includes("Telefon")
-                              ? "Opțional nr. 07xx xxx xxx"
+                              ? "Opțional tel..."
                               : `Completează ${formFields[
                                   field
                                 ].label.toLowerCase()} ...`

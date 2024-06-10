@@ -1,5 +1,5 @@
 .responseListWrapper {
-  border: 1px solid #ffffff80;
+  border: 1px solid silver;
   border-radius: 0.5rem;
   width: 100%;
   height: auto;
@@ -13,7 +13,7 @@
   width: 100%;
   height: auto;
   padding: 0.5rem;
-  border: 1px solid #ffffff80;
+  border: 1px solid silver;
 }
 
 .personsDataWrapper {
@@ -21,6 +21,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
   width: 100%;
   height: auto;
 }
@@ -28,5 +29,5 @@
 .line {
   width: 60%;
   height: 1px;
-  background-color: #ffffff80;
+  background-color: silver;
 }

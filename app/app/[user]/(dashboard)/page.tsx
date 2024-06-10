@@ -25,6 +25,7 @@ export default async function Overview() {
         width: "100%",
         height: "100%",
         gap: "1rem",
+        textAlign: "center",
       }}
     >
       <h1>Overview Responses</h1>
@@ -85,7 +86,17 @@ export default async function Overview() {
               >
                 {res.response.map((r, i) =>
                   (r as any).persons.map((resp: any, i: number) => (
-                    <div key={i}>
+                    <div
+                      key={i}
+                      style={{
+                        border: "1px 1px 1px 0",
+                        padding: ".5rem",
+                        borderRadius: "5px",
+                        width: "100%",
+                        maxWidth: "500px",
+                        borderTop: "1px solid silver",
+                      }}
+                    >
                       <p>Nume: {resp.guest}</p>
                       <p>Tip meniu: {resp.menu}</p>
                       <p>Telefon: {resp.phone}</p>
