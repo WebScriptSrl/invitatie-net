@@ -1,0 +1,32 @@
+.responseListWrapper {
+  border: 1px solid #ffffff80;
+  border-radius: 0.5rem;
+  width: 100%;
+  height: auto;
+}
+
+.responseListItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  padding: 0.5rem;
+  border: 1px solid #ffffff80;
+}
+
+.personsDataWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+}
+
+.line {
+  width: 60%;
+  height: 1px;
+  background-color: #ffffff80;
+}

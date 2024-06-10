@@ -26,8 +26,6 @@ export async function generateMetadata(
 
   const invitePath = decodeURIComponent(params.domain);
 
-  console.log(invitePath, "Invite path");
-
   const inviteDomain =
     process.env.NODE_ENV === "production"
       ? `https://${process.env.PUBLIC_BASE_URL}/${invitePath}`
@@ -35,7 +33,7 @@ export async function generateMetadata(
 
   const inviteData = await fetchInviteData({
     baseUrl: inviteDomain,
-    urlType: "PREMIUM",
+    urlType: "PREMIUM", // have to change later
   });
 
   const previousImage = (await parent).openGraph?.images || [];

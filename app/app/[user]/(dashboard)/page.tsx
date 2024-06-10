@@ -1,65 +1,107 @@
-import prisma from "@/lib/prisma";
+import styles from "@/styles/modules/dashboard.module.css";
+
+import { fetchInviteResponsesData } from "@/lib/fetchers/inviteResponseData";
+import { capitalize } from "@/lib/utils";
+
+// Testing purposes
+// const userTestId = "clwzfi7ou1002v1y3zqotli21";
+const userTestId = process.env.NEXT_PUBLIC_USER_ID;
 
 export default async function Overview() {
-  const data = await prisma.inviteResponse.findMany({
-    where: {
-      // Testing purposes
-      // userId: "clwzfi7ou1002v1y3zqotli21",
-      userId: process.env.NEXT_PUBLIC_USER_ID,
-    },
-    select: {
-      response: true,
-      invite: {
-        select: {
-          handle: true,
-          title: true,
-        },
-      },
-      createdAt: true,
-    },
-  });
+  const response = await fetchInviteResponsesData(userTestId!);
 
-  // Work in progress
+  const title = response.map((res) => res.invite?.title)[0];
+  const capitalizeTitle = title?.split(" ").map(capitalize).join(" ");
 
-  const sortedPerInvite = data.reduce((acc: any, curr: any) => {
-    if (!acc.hasOwnProperty(curr.invite.handle)) {
-      acc[curr.invite.handle] = [];
-    }
-    acc[curr.invite.handle].push(curr);
-    return acc;
-  }, {});
-
-  const sortedPerInviteArray = Object.entries(sortedPerInvite);
-
-  let invite: string = "";
-
-  for (const [key, value] of sortedPerInviteArray) {
-    invite = key;
-
-    (value as any[]).forEach((element: any) => {
-      (element.response as any[]).forEach((response: any) => {
-        // console.log(response);
-      });
-    });
-  }
+  const responseArray = response.map((res) => res.response);
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+        height: "100%",
+        gap: "1rem",
+      }}
+    >
       <h1>Overview Responses</h1>
+      <h2>{capitalizeTitle}</h2>
 
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-      {/* {sortedPerInviteArray.map(([key, value]) => (
-        <div key={key}>
-          <h2>{key}</h2>
-          {(value as any[]).map((element: any) => (
-            <div key={element.createdAt}>
-              {element.response.map((response: any) => (
-                <div key={response}>{response.guest}</div>
+      <ul
+        className={styles.responseListWrapper}
+        style={{
+          listStyle: "none",
+          padding: 0,
+          margin: 0,
+          display: "grid",
+          gap: "1rem",
+        }}
+      >
+        {response.map((res) => (
+          <li
+            className={styles.responseListItem}
+            key={res.createdAt.toString()}
+          >
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-around",
+              }}
+            >
+              <div>
+                <p>Data raspunsului:</p>
+                <p>{res.createdAt.toLocaleString()}</p>
+              </div>
+              {res.response.map((r, i) => (
+                <div key={i}>
+                  <p>Invitat</p>
+                  <p>{(r as any).guest}</p>
+                  <div>
+                    <p>Nr. persoane: {(r as any).persons.length}</p>
+                  </div>
+                </div>
               ))}
             </div>
-          ))}
-        </div>
-      ))} */}
+
+            <span className={styles.line}></span>
+
+            <div className={styles.personsDataWrapper}>
+              <h2>Raspuns</h2>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "space-around",
+                  alignItems: "center",
+                  textAlign: "center",
+                  gap: "1rem",
+                  padding: "1rem",
+                  width: "100%",
+                }}
+              >
+                {res.response.map((r, i) =>
+                  (r as any).persons.map((resp: any, i: number) => (
+                    <div key={i}>
+                      <p>Nume: {resp.guest}</p>
+                      <p>Tip meniu: {resp.menu}</p>
+                      <p>Telefon: {resp.phone}</p>
+                      <p>Mesaj: {resp.message}</p>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
+
+/*
+ * DO NOT PUSH INTO PRODUCTION
+ */

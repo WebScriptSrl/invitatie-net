@@ -1,6 +1,5 @@
 import { loadFont } from "@/lib/utils";
 import { ImageResponse } from "next/og";
-import { inter } from "@/styles/fonts";
 import Image from "next/image";
 
 export const alt = "Invitatie Net";
