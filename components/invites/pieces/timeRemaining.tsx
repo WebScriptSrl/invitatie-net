@@ -23,12 +23,12 @@ export default function TimeRemaining({
   const now = Date.now();
 
   // get timzone offset
-  const timeOffset = new Date().getTimezoneOffset();
+  const timeOffset = new Date().getTimezoneOffset() * 60000;
 
-  const timeRemaining = dateInMs - now;
+  const timeRemaining = dateInMs - (now - timeOffset);
   const remainigDays = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
   const remainigHours = Math.floor(
-    (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60) + timeOffset / 60
+    (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
   );
 
   const remainigMinutes = Math.floor(
