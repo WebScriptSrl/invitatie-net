@@ -391,11 +391,11 @@ export default function ConfirmationForm({
                   gap: "10px",
                 }}
               >
-                <label htmlFor="notComingName">Nume</label>
+                <label htmlFor="person1name">Nume</label>
                 <input
                   type="text"
-                  name="notComingName"
-                  id="notComingName"
+                  name="person1name"
+                  id="person1name"
                   onChange={handleChange}
                   required={true}
                   className={styles.inputField}
@@ -409,10 +409,10 @@ export default function ConfirmationForm({
                     maxWidth: "400px",
                   }}
                 />
-                <label htmlFor="notComingMessage">Mesajul tau...</label>
+                <label htmlFor="person1message">Mesajul tau...</label>
                 <textarea
-                  name="notComingMessage"
-                  id="notComingMessage"
+                  name="person1message"
+                  id="person1message"
                   onChange={handleUserMessageChange}
                   rows={5}
                   className={clsx(styles.inputField, styles.textarea)}
