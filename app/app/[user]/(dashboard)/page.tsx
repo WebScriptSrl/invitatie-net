@@ -1,19 +1,46 @@
 import styles from "@/styles/modules/dashboard.module.css";
 
-import { fetchInviteResponsesData } from "@/lib/fetchers/inviteResponseData";
+import { fetchInviteResponsesData } from "@/lib/fetchers";
 import { capitalize } from "@/lib/utils";
+import { IResponseData } from "@/lib/interfaces";
 
 // Testing purposes
 // const userTestId = "clwzfi7ou1002v1y3zqotli21";
 const userTestId = process.env.NEXT_PUBLIC_USER_ID;
 
 export default async function Overview() {
-  const response = await fetchInviteResponsesData(userTestId!);
+  const responseData: IResponseData[] = await fetchInviteResponsesData(
+    userTestId!
+  );
 
-  response.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  responseData.sort((a, b) => b.createdAt!.getTime() - a.createdAt!.getTime());
 
-  const title = response.map((res) => res.invite?.title)[0];
-  const capitalizeTitle = title?.split(" ").map(capitalize).join(" ");
+  const title = responseData.map((res) => res.invite?.title)[0];
+  const capitalizeTitle = title
+    ?.split(" ")
+    .map(capitalize)
+    .join(" ")
+    .replace(" Si ", " & ");
+
+  const guestResponse = responseData.map((res) => res.response);
+
+  const personsResponse = guestResponse.flatMap((res) =>
+    res?.map((r) => r.persons)
+  );
+
+  const persons = personsResponse.flatMap((res) => res);
+
+  const confirmedPersons = persons.filter(
+    (person) => person?.menu !== "Nu pot ajunge!"
+  );
+
+  const declinedPersons = persons.filter(
+    (person) => person?.menu === "Nu pot ajunge!"
+  );
+
+  // console.log(confirmedPersons);
+
+  let personsComing = true;
 
   return (
     <div
@@ -28,8 +55,37 @@ export default async function Overview() {
         textAlign: "center",
       }}
     >
-      <h1>Overview Responses</h1>
+      <h1>Răspunsuri</h1>
       <h2>{capitalizeTitle}</h2>
+
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          justifyContent: "space-around",
+          flexWrap: "wrap",
+          alignItems: "center",
+          gap: "2rem",
+          border: "1px solid silver",
+          padding: "1rem",
+          borderRadius: "5px",
+        }}
+      >
+        <div>
+          <p>Total persoane</p>
+          <p>{persons.length}</p>
+        </div>
+
+        <div>
+          <p>Persoane confirmate</p>
+          <p>{confirmedPersons.length}</p>
+        </div>
+
+        <div>
+          <p>Invitatii declinate</p>
+          <p>{declinedPersons.length}</p>
+        </div>
+      </div>
 
       <ul
         className={styles.responseListWrapper}
@@ -41,10 +97,10 @@ export default async function Overview() {
           gap: "1rem",
         }}
       >
-        {response.map((res) => (
+        {responseData.map((res) => (
           <li
             className={styles.responseListItem}
-            key={res.createdAt.toString()}
+            key={res.createdAt!.toString()}
           >
             <div
               style={{
@@ -54,16 +110,24 @@ export default async function Overview() {
               }}
             >
               <div>
-                <p>Data raspunsului:</p>
-                <p>{res.createdAt.toLocaleString()}</p>
+                <p>Data răspunsului:</p>
+                <p>{res.createdAt!.toLocaleString()}</p>
               </div>
-              {res.response.map((r, i) => (
+              {res.response?.map((r, i) => (
                 <div key={i}>
                   <p>Invitat</p>
-                  <p>{(r as any).guest}</p>
-                  <div>
-                    <p>Nr. persoane: {(r as any).persons.length}</p>
-                  </div>
+                  <p>{r.guest}</p>
+                  {r.persons.map((resp, i) => (
+                    <div key={i}>
+                      {resp.menu === "Nu pot ajunge!"
+                        ? ((personsComing = false), (<p>Nr. persoane: 0</p>))
+                        : (personsComing = true)}
+                    </div>
+                  ))}
+
+                  {personsComing ? (
+                    <p>Nr. persoane: {r.persons.length}</p>
+                  ) : null}
                 </div>
               ))}
             </div>
@@ -71,7 +135,7 @@ export default async function Overview() {
             <span className={styles.line}></span>
 
             <div className={styles.personsDataWrapper}>
-              <h2>Raspuns</h2>
+              <h2>Răspuns</h2>
               <div
                 style={{
                   display: "flex",
@@ -84,8 +148,8 @@ export default async function Overview() {
                   width: "100%",
                 }}
               >
-                {res.response.map((r, i) =>
-                  (r as any).persons.map((resp: any, i: number) => (
+                {res.response?.map((r, i) =>
+                  r.persons.map((resp, i) => (
                     <div
                       key={i}
                       style={{
@@ -97,10 +161,19 @@ export default async function Overview() {
                         borderTop: "1px solid silver",
                       }}
                     >
-                      <p>Nume: {resp.guest}</p>
-                      <p>Tip meniu: {resp.menu}</p>
-                      <p>Telefon: {resp.phone}</p>
-                      <p>Mesaj: {resp.message}</p>
+                      {resp.menu === "Nu pot ajunge!" ? (
+                        <div>
+                          <p>Invitatul nu poate ajunge!</p>
+                          <p>Mesaj: {resp.message}</p>
+                        </div>
+                      ) : (
+                        <div>
+                          <p>Nume: {resp.guest}</p>
+                          <p>Tip meniu: {resp.menu}</p>
+                          <p>Telefon: {resp.phone}</p>
+                          <p>Mesaj: {resp.message}</p>
+                        </div>
+                      )}
                     </div>
                   ))
                 )}

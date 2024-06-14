@@ -1,3 +1,4 @@
+import { IResponseData } from "../interfaces";
 import prisma from "../prisma";
 
 export async function fetchInviteResponsesData(userId: string) {
@@ -18,5 +19,5 @@ export async function fetchInviteResponsesData(userId: string) {
     },
   });
 
-  return responses;
+  return responses as IResponseData[];
 }

@@ -1,12 +1,10 @@
 import { IDataInvite, IDataInvitee, IDataUser } from ".";
 
-export interface IResponseData {
+interface IResponse {
   id?: string;
 
   inviteId?: string;
   inviteeId?: string;
-
-  response?: JSON[];
 
   responseAt?: Date;
   createdAt?: Date;
@@ -17,4 +15,20 @@ export interface IResponseData {
 
   invitee?: IDataInvitee;
   invite?: IDataInvite;
+}
+
+export interface IResponseData extends IResponse {
+  response?: [
+    {
+      guest: string;
+      persons: [
+        {
+          guest: string;
+          menu: string;
+          phone?: string;
+          message?: string;
+        }
+      ];
+    }
+  ];
 }

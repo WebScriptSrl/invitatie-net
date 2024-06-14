@@ -89,7 +89,7 @@ export default function DateTimeComponent({
             height: "100vh",
             width: "100%",
             objectFit: "cover",
-            objectPosition: "center",
+            objectPosition: options?.imagePosition || "center",
             position: "absolute",
             zIndex: -10,
           }}

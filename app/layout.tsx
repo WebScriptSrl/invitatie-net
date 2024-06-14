@@ -80,6 +80,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ro" suppressHydrationWarning>
+      <head>
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon.png" />
+      </head>
       <body className={lora.className}>{children}</body>
     </html>
   );

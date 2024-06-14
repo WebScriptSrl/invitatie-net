@@ -29,7 +29,7 @@ export default function InviteHeader({
 
   const additionalText = options?.additionalText
     ? options.additionalText
-    : "Va invităm sa ne fiți alături la începerea unui nou capitol al poveștii noastre!";
+    : "Vă invităm să ne fiți alături la începerea unui nou capitol al poveștii noastre!";
 
   const { isMobile, isDesktop } = useWindowSize();
 

@@ -136,6 +136,7 @@ export default async function Poetry({
           showSeconds: false,
           image: `${imagesApi}?file=${dateTimeImageBackground}`,
           desktopImage: `${imagesApi}?file=${defaultBackgroundImage}`,
+          imagePosition: "bottom",
         }}
       />
 
