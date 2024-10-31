@@ -1,0 +1,297 @@
+.mainHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 2rem 1rem;
+  width: 100%;
+  box-shadow: 0 0px 10px 1px rgba(255, 0, 0, 0.5);
+}
+
+.mainNav {
+  position: relative;
+  z-index: 9999;
+}
+
+.mainNav ul {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  pointer-events: auto;
+}
+
+.imageLogo {
+  display: none;
+}
+
+.navItem {
+  padding: 0.2rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.navItem:hover {
+  box-shadow: inset 0 1px 0px 0px rgba(var(--foreground-rgb), 0.9);
+}
+
+.activePath {
+  box-shadow: inset 0 1px 0px 0px rgba(255, 0, 0, 0.9);
+  text-shadow: 0 0 1px rgba(255, 0, 0, 0.9);
+}
+
+.menuSocialBanner {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .mainHeader {
+    justify-content: flex-end;
+    padding: 0.4rem;
+  }
+
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 2.5rem;
+    height: 1.5rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10;
+  }
+
+  .hamburgerLine {
+    width: 1.6rem;
+    height: 0.1rem;
+    background: rgb(var(--foreground-rgb));
+    border-radius: 10px;
+  }
+
+  .hamburgerLine:nth-child(2) {
+    background-color: red;
+  }
+
+  .imageLogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .mainNav.active {
+    position: fixed;
+    align-items: center;
+    inset: 0 0 auto;
+    padding: 0.4rem;
+    border-radius: 0;
+    width: 90%;
+    border: none;
+    border-bottom: 1px solid rgba(var(--callout-border-rgb), 0.25);
+    background-color: rgba(var(--background-end-rgb), 0.4);
+    background-clip: padding-box;
+    backdrop-filter: blur(34px);
+    animation: menuFade 1s ease-in-out forwards;
+    overflow: hidden;
+  }
+
+  .mainNav.inactive {
+    position: fixed;
+    inset: 0 0 auto;
+    padding: 0.4rem 2.4rem 2.1rem 0.4rem;
+    width: 10rem;
+    border: none;
+    background-color: rgba(var(--background-end-rgb), 0.4);
+    background-clip: padding-box;
+    backdrop-filter: blur(44px);
+    animation: menuFadeOut 1s ease-in-out forwards;
+    overflow: hidden;
+  }
+
+  .mainNav.inactive ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+    inset: auto 0 0;
+    padding: 2rem;
+    width: 100%;
+    height: 200px;
+    animation: fadeOut 0.5s ease-in-out forwards;
+  }
+
+  .mainNav.active ul {
+    flex-direction: column;
+    align-items: center;
+    inset: auto 0 0;
+    padding: 2rem;
+    width: 100%;
+    height: auto;
+    animation: fadeIn 1s ease-in-out forwards;
+  }
+
+  .hamburger.open {
+    border-bottom: 1px solid rgba(var(--callout-border-rgb), 0.75);
+    border-radius: 10%;
+  }
+
+  .hamburger.open .hamburgerLine:nth-child(1) {
+    animation: lineAnimationOne 1s ease-in-out forwards;
+  }
+
+  .hamburger.open .hamburgerLine:nth-child(2) {
+    animation: lineAnimationTwo 1s ease-in-out forwards;
+  }
+
+  .hamburger.open .hamburgerLine:nth-child(3) {
+    animation: lineAnimationThree 1s ease-in-out forwards;
+  }
+
+  .hamburger.closed .hamburgerLine:nth-child(1) {
+    animation: lineAnimationOneBack 1s ease-in-out forwards;
+  }
+
+  .hamburger.closed .hamburgerLine:nth-child(2) {
+    animation: lineAnimationTwoBack 1s ease-in-out forwards;
+  }
+
+  .hamburger.closed .hamburgerLine:nth-child(3) {
+    animation: lineAnimationThreeBack 1s ease-in-out forwards;
+  }
+
+  .menuSocialBanner {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    bottom: 2rem;
+    right: 50%;
+    transform: translateX(50%);
+    z-index: -10;
+    padding: 1rem;
+  }
+
+  .menuSocialBanner.open {
+    animation: fadeIn 2s ease-in-out forwards;
+  }
+
+  .menuSocialBanner.closed {
+    opacity: 0;
+    animation: fadeOut 0.5s ease-in-out forwards;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes lineAnimationOne {
+  from {
+    transform: rotate(0) translate(0, 0);
+  }
+  to {
+    transform: rotate(45deg) translate(0.7rem, 0);
+    height: 0.2rem;
+  }
+}
+
+@keyframes lineAnimationOneBack {
+  from {
+    height: 0.2rem;
+    transform: rotate(45deg) translate(0.7rem, 0);
+  }
+  to {
+    transform: rotate(0) translate(0, 0);
+  }
+}
+
+@keyframes lineAnimationTwo {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(7.5rem);
+    width: 0;
+    height: 0;
+  }
+}
+
+@keyframes lineAnimationTwoBack {
+  from {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    transform: translateX(7.5rem);
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes lineAnimationThree {
+  from {
+    transform: rotate(0) translate(0, 0);
+  }
+  to {
+    background-color: red;
+    transform: rotate(-45deg) translate(0.65rem, 0);
+  }
+}
+
+@keyframes lineAnimationThreeBack {
+  from {
+    background-color: red;
+    transform: rotate(-45deg) translate(0.65rem, 0);
+  }
+  to {
+    transform: rotate(0) translate(0, 0);
+  }
+}
+
+@keyframes menuFade {
+  from {
+    width: 2.5rem;
+    height: 1.5rem;
+    border-radius: 0 0 1rem 0;
+    padding: 0.4rem 2.4rem 2.1rem 0.4rem;
+  }
+  to {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    padding: 0.4rem;
+  }
+}
+
+@keyframes menuFadeOut {
+  from {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    padding: 0.4rem;
+  }
+  to {
+    width: 0;
+    height: 0;
+    border-radius: 0 0 1rem 0;
+    padding: 0.4rem 2.4rem 2.1rem 0.4rem;
+  }
+}

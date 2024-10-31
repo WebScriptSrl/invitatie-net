@@ -449,12 +449,13 @@ export default function ConfirmationForm({
           )}
           <button
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || options?.button.isExample}
             className={styles.submitButton}
             style={{}}
           >
             {isSubmitting ? "Se trimite..." : "Trimite"}
           </button>
+          <p>{options?.button.isExample && "(Demo - Formular Dezactivat)"}</p>
         </form>
       )}
     </section>

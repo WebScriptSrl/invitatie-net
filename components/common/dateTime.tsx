@@ -9,14 +9,17 @@ import clsx from "clsx";
 import { capitalize, loadFont } from "@/lib/utils";
 import TimeRemaining from "../invites/pieces/timeRemaining";
 import useWindowSize from "@/lib/hooks/use-window-size";
+import TimePassed from "../invites/pieces/timePassed";
 
 export default function DateTimeComponent({
   dateTime,
   dateInMs,
+  isDone,
   options,
 }: {
   dateTime: string;
   dateInMs: number;
+  isDone?: boolean;
   options?: { [key: string]: any };
 }) {
   const introText = options?.dateTimeIntroText || "Ziua noastră !";
@@ -76,7 +79,11 @@ export default function DateTimeComponent({
 
       <span className={styles.lineBreak}></span>
 
-      <TimeRemaining dateInMs={dateInMs} options={options} />
+      {!isDone ? (
+        <TimeRemaining dateInMs={dateInMs} options={options} />
+      ) : (
+        <TimePassed dateInMs={dateInMs} options={options} />
+      )}
 
       {options?.image && (
         <Image

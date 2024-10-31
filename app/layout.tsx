@@ -1,6 +1,7 @@
+import "@/styles/globals.css";
+
 import type { Metadata } from "next";
 import { lora } from "@/styles/fonts";
-import "@/styles/globals.css";
 import { ensureStartsWith } from "@/lib/utils";
 
 const { TWITTER_CREATOR, TWITTER_SITE, SITE_NAME, COMPANY_NAME } = process.env;
@@ -35,6 +36,11 @@ export async function generateMetadata(): Promise<Metadata> {
     authors: [
       {
         name: COMPANY_NAME,
+        url: "https://webscript.ro",
+      },
+      {
+        name: "Invitatie Net",
+        url: baseUrl,
       },
     ],
 

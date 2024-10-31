@@ -3,6 +3,7 @@ import styles from "@/styles/modules/components/invites/common.module.css";
 import clsx from "clsx";
 
 import { loadFont } from "@/lib/utils";
+import SocialBanner from "@/components/main/socialBanner";
 
 export default async function InviteFooter({
   params,
@@ -17,7 +18,7 @@ export default async function InviteFooter({
 
   const secondaryFont = loadFont(options?.secondaryFont!);
 
-  const text = options?.endText || "Va multumim!";
+  const text = options?.endText || "Vă mulțumim!";
 
   return (
     <footer className={clsx(font?.className, styles.footerInvite)}>
@@ -39,6 +40,17 @@ export default async function InviteFooter({
       >
         {options?.logo}
       </p>
+
+      {options?.isExample && (
+        <SocialBanner
+          title="Invitatie.Net"
+          message="Urmărește-ne pe rețelele de socializare!"
+          options={{
+            showWA: true,
+            isExample: options?.isExample,
+          }}
+        />
+      )}
     </footer>
   );
 }

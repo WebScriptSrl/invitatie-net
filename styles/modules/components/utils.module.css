@@ -1,0 +1,130 @@
+.commingSoonBox {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(var(--background-end-rgb), 0.1);
+  background-image: url("/images/sunset-4542361_1280.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+.commingSoonBox::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--background-start-rgb), 0.5),
+    rgba(var(--background-end-rgb), 0.5)
+  );
+  backdrop-filter: blur(10px);
+}
+
+.commingSoonBox > * {
+  z-index: 1;
+}
+
+.socialMediaBanner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.socialMediaContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.whatsappContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.commingSoonBtn {
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  background: var(--primary-glow);
+  color: rgb(var(--foreground-rgb));
+  box-shadow: 0 0 10px rgba(255, 1, 1, 0.9);
+  cursor: pointer;
+}
+
+.commingSoonBtn:hover {
+  box-shadow: 0 0 10px rgba(var(--foreground-rgb), 0.9);
+}
+
+.button {
+  position: relative;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-size: 0.725rem;
+  border: none;
+  background: var(--background-start-rgb);
+  color: rgb(var(--foreground-rgb));
+  letter-spacing: 1px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  background: var(--tile-border);
+  top: -2px;
+  left: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  border-radius: 10px;
+  background-size: 400%;
+  z-index: -1;
+  opacity: 1;
+  backdrop-filter: blur(34px);
+  animation: glow 10s infinite alternate;
+}
+
+.button::after {
+  content: "";
+  position: absolute;
+  background: rgba(var(--background-start-rgb), 0.9);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  z-index: -1;
+}
+
+.button:hover::before {
+  border-bottom: 1px solid rgba(var(--foreground-rgb), 0.9);
+}
+
+.button:active::after {
+  background: rgba(var(--foreground-rgb), 0.9);
+  color: var(--background-start-rgb);
+}
+
+@keyframes glow {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 400% 0;
+  }
+}

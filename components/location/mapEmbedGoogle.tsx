@@ -8,7 +8,11 @@ export default function MapEmbedGoogle({
   options?: { [key: string]: any };
 }) {
   const q =
-    options?.location?.replace(" ", "+") + options?.address.replace(", ", "+");
+    options?.location?.replace(" ", "+") +
+    "," +
+    options?.address.replace(", ", ",").replace(" ", "+");
+
+  console.log(q);
 
   return (
     <div className={styles.locationContainer}>

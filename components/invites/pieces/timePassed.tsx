@@ -7,14 +7,14 @@ import clsx from "clsx";
 import { loadFont } from "@/lib/utils";
 import { useEffect, useState } from "react";
 
-export default function TimeRemaining({
+export default function TimePassed({
   dateInMs,
   options,
 }: {
   dateInMs: number;
   options?: { [key: string]: any };
 }) {
-  const [remainingTime, setRemainingTime] = useState<number>(0);
+  const [timePassed, setTimePassed] = useState<number>(0);
   const [days, setDays] = useState<number>(0);
   const [hours, setHours] = useState<number>(0);
   const [minutes, setMinutes] = useState<number>(0);
@@ -25,19 +25,19 @@ export default function TimeRemaining({
   // get timzone offset
   const timeOffset = new Date().getTimezoneOffset() * 60000;
 
-  const timeRemaining = dateInMs - (now - timeOffset);
-  const remainigDays = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+  const civilTimePassed = now - timeOffset - dateInMs;
+  const remainigDays = Math.floor(civilTimePassed / (1000 * 60 * 60 * 24));
   const remainigHours = Math.floor(
-    (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    (civilTimePassed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
   );
 
   const remainigMinutes = Math.floor(
-    (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
+    (civilTimePassed % (1000 * 60 * 60)) / (1000 * 60)
   );
-  const remainigSeconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+  const remainigSeconds = Math.floor((civilTimePassed % (1000 * 60)) / 1000);
   useEffect(() => {
     const interval = setInterval(() => {
-      setRemainingTime(timeRemaining);
+      setTimePassed(civilTimePassed);
       setDays(remainigDays);
       setHours(remainigHours);
       setMinutes(remainigMinutes);
@@ -45,7 +45,7 @@ export default function TimeRemaining({
     }, 1000);
     return () => clearInterval(interval);
   }, [
-    timeRemaining,
+    civilTimePassed,
     remainigDays,
     remainigHours,
     remainigMinutes,
@@ -63,7 +63,7 @@ export default function TimeRemaining({
         fontSize: options?.fontSize || "1.5rem",
       }}
     >
-      <p>Au mai rămas</p>
+      <p>Suntem căsătoriți și fericiți de</p>
       <div className={clsx(styles.timeRemainingBox)}>
         <p>
           {days} {days === 1 ? "zi" : "zile"}

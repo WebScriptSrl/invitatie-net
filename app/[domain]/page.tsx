@@ -140,6 +140,7 @@ export default async function InvitePage({
             components: components,
             isExample: false,
             date: inviteData?.eventDate,
+            civilDate: "2024-08-24T14:00:00.000Z",
             inviteHandle: inviteData?.handle,
             personsStartText: "Alături de noi vor fi",
           }}

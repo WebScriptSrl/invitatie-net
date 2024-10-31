@@ -7,6 +7,7 @@ import clsx from "clsx";
 
 export default function PersonsComponent({
   persons,
+  isDone,
   options,
 }: {
   persons: {
@@ -14,6 +15,7 @@ export default function PersonsComponent({
     role: string;
     image?: string;
   }[];
+  isDone?: boolean;
   options?: { [key: string]: any };
 }) {
   const secondaryFont = loadFont(options?.font!);
@@ -28,6 +30,7 @@ export default function PersonsComponent({
       style={{
         backgroundColor: options?.backgroundColor || "silver",
         color: options?.fontColor || "black",
+        textAlign: "center",
       }}
     >
       <h2
@@ -101,6 +104,64 @@ export default function PersonsComponent({
         )}
       </div>
       <span className={styles.lineBreak}></span>
+
+      {isDone && (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            padding: "2rem",
+            justifyContent: "center",
+            gap: "1rem",
+          }}
+        >
+          <h2
+            style={{
+              fontSize: options?.fontSize || "1.5rem",
+              color: options?.fontColor || "black",
+            }}
+          >
+            Nu există cuvinte care să exprime recunoștința noastră pentru
+            sprijinul și dragostea pe care ne-ați oferit-o de-a lungul timpului.
+            <br />
+            Vă mulțumim din suflet!
+          </h2>
+          <p>
+            P.S. Ne pare rău că nu am putut să stăm prea mult pe acasă după
+            eveniment! 😅
+          </p>
+          <p>Și că s-a defectat mașina când am vrut să venim la voi! 😅</p>
+          <span className={styles.lineBreak}></span>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "1rem",
+            }}
+          >
+            <h2
+              style={{
+                fontSize: options?.fontSize || "1.5rem",
+                color: options?.fontColor || "black",
+              }}
+            >
+              Nu în ultimul rând, vă mulțumim tuturor celor care ați fost
+              alături de noi în această zi !
+            </h2>
+
+            <p>
+              Ne-ați făcut ziua mai frumoasă și mai specială ! Vă mulțumim din
+              suflet !
+            </p>
+
+            <span className={styles.lineBreak}></span>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

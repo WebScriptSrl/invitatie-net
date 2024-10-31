@@ -42,6 +42,7 @@ export default function InviteHeader({
           options={{
             fontSize: isDesktop ? "2.5rem" : "1.5rem",
             color: "silver",
+            textShadowColor: "silver",
           }}
         />
         {menu && menu.length >= 4 && options?.showMenu && (

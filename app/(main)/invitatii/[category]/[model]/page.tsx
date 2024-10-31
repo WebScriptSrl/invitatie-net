@@ -13,6 +13,7 @@ export default async function InviteModel({
         <Poetry
           params={{
             model: model,
+            isExample: true,
             components: ["location", "date", "time", "message"],
             images: ["background.jpg", "profile.jpg"],
           }}

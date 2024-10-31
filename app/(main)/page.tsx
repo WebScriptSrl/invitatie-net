@@ -1,10 +1,34 @@
-import Image from "next/image";
+import ComingSoon from "@/components/main/comingSoon";
+import ProductPresentation from "@/components/main/home/presentation";
+import TypeWriter from "@/components/main/typeWriter";
 import styles from "@/styles/modules/homepage.module.css";
 
-export default function Home() {
+import Image from "next/image";
+
+export default function Home({
+  params,
+  searchParams,
+}: {
+  params: { domain: string };
+  searchParams: URLSearchParams;
+}) {
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
+      <ComingSoon
+        title="Invitații online personalizate"
+        message="Incă lucrăm din greu să aducem o experiență de neuitat!"
+        options={{
+          additionalMessage:
+            "Pentru ințelegerea dvs vă oferim o reducere de 50% la modelul Poetry disponibil! 🎉 Detalii pe Whatsapp!",
+          extraDetails:
+            "Modelul Poetry vine la pachet cu un domeniu premium personalizat, hărți și nelimitat la invitați!",
+          promo: "50% reducere",
+          buttonText: "Model disponibil",
+          buttonHref: "/invitatii/nunta/poetry",
+        }}
+      />
+
+      {/* <div className={styles.description}>
         <p>
           Full website coming soon&nbsp;
           <code className={styles.code}>Invitatie Net</code>
@@ -26,12 +50,61 @@ export default function Home() {
             />
           </a>
         </div>
+      </div> */}
+
+      {/* <h1>
+        Invitatii online{" "}
+        <span
+          style={{
+            color: "#97BE5A",
+          }}
+        >
+          <TypeWriter
+            text={[
+              "personalizate",
+              "moderne",
+              "sustenabile",
+
+              "pentru nunta",
+              "botez",
+              "petreceri",
+
+              "orice eveniment",
+
+              // "design adaptativ",
+
+              "doar pe Invitatie.Net",
+            ]}
+            speed={100}
+            delay={100}
+            className={styles.title}
+            type="presentation"
+          />
+        </span>
+      </h1> */}
+
+      {/* <div className={styles.center}>
+        <Image
+          src={`/images/computer-1271863.svg`}
+          alt={"Invitatie Net computer image"}
+          width={300}
+          height={600}
+          priority
+        />
+      </div> */}
+
+      {/* PRODUCT PRESENTATION */}
+      {/* <div className={styles.center}>
+        <ProductPresentation invite="Invitatie Net" screen="mobile" />
       </div>
-
-      <h1 className={styles.title}>Welcome to Invitatie Net!</h1>
-      <h2>Full website is coming soon!&nbsp;</h2>
-
       <div className={styles.center}>
+        <ProductPresentation invite="Invitatie Net" screen="tablet" />
+      </div>
+      <div className={styles.center}>
+        <ProductPresentation invite="Invitatie Net" screen="laptop" />
+      </div> */}
+
+      {/* <div className={styles.center}>
         <Image
           className={styles.logo}
           src="/next.svg"
@@ -40,7 +113,7 @@ export default function Home() {
           height={37}
           priority
         />
-      </div>
+      </div> */}
 
       {/* <div className={styles.grid}>
         <a

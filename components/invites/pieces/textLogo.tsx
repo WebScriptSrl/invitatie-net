@@ -23,6 +23,12 @@ export default function TextLogo({
         fontSize: fontSize,
         marginTop: "1rem",
         color: options?.color || "#d4af37",
+        textAlign: options?.textAlign || "center",
+        justifyContent: options?.justifyContent || "center",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textShadow: `1px 1px 10px ${options?.textShadowColor || "red"}`,
+        width: options?.width || "100%",
       }}
     >
       {text}
